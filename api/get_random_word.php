@@ -31,6 +31,8 @@ $random_number = rand(0, 999);
 $random_word = $words[$random_number];
 
 $_SESSION['random_word'] = $random_word;
+$_SESSION['attempts_left'] = 6;
+$_SESSION['guesses'] = [];
 
 echo json_encode([
     "response" => "Random word Generated Successfully."

@@ -22,10 +22,10 @@ $inputData = json_decode(file_get_contents('php://input'), true);
 
 $guess_word = isset($inputData['guess_word']) ? $inputData['guess_word'] : '';
 
-if (!$guess_word) {
+if (strlen($guess_word) !== 5) {
     http_response_code(400); // Invalid input
     echo json_encode([
-        "message" => "Empty input"
+        "message" => "Not enough letters"
     ]);
     return;
 }
@@ -57,18 +57,68 @@ if (!array_search(strtolower($guess_word), $words)) {
     return;
 }
 
-// Check the random word
+// Check the random_word and attempts_left variables
 $random_word = isset($_SESSION['random_word']) ? $_SESSION['random_word'] : '';
+$attempts_left = isset($_SESSION['attempts_left']) ? $_SESSION['attempts_left'] : '';
 
-if (!$random_word) {
+if (!$random_word || !$attempts_left) {
     http_response_code(400); // Invalid input
     echo json_encode([
-        "message" => "Generate new random word"
+        "message" => "Play New Game"
     ]);
     return;
 }
 
+// update attempts_left
+if ($attempts_left === 0) {
+    http_response_code(400); // out of attempts
+    echo json_encode([
+        "message" => "No attempts left"
+    ]);
+    return;
+}
+$attempts_left -= 1;
+$_SESSION['attempts_left'] = $attempts_left;
+
+// update guesses
+$_SESSION['guesses'][] = $guess_word;
+
 // Feedback for the guess
-echo json_encode([
-    "message" => $random_word
-]);
+if ($guess_word === $random_word) {
+    echo json_encode([
+        "correct" => true,
+        "feedback" => [
+            ["letter" => $guess_word[0], "status" => "green" ],
+            ["letter" => $guess_word[1], "status" => "green" ],
+            ["letter" => $guess_word[2], "status" => "green" ],
+            ["letter" => $guess_word[3], "status" => "green" ],
+            ["letter" => $guess_word[4], "status" => "green" ]
+        ],
+        "attempts_left" => $attempts_left
+    ]);
+    return;
+} else {
+    $feedback = [];
+    
+    for ($index = 0; $index < 5; $index++) {
+        $character = $guess_word[$index];
+        $status    = "unknown";
+        
+        if ($character === $random_word[$index]) {
+            $status = "green";
+        } else if (strpos($random_word, $character) !== false) {
+            $status = "yellow";
+        } else {
+            $status = "gray";
+        }
+
+        $feedback[] = ["letter" => $character, "status" => $status];
+    }
+
+    echo json_encode([
+        "correct" => false,
+        "feedback" => $feedback,
+        "attempts_left" => $attempts_left
+    ]);
+    return;
+}
