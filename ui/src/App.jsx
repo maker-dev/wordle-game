@@ -1,18 +1,27 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+import useWorlde from './hooks/useWorlde';
+import Worlde from './components/Worlde';
 
 function App() {
-  const [message, setMessage] = useState("");
+
+  const [isGameStarted, setIsGameStarted] = useState(false);
+  const {startGame} = useWorlde();
+
+
   useEffect(() => {
-    fetch("http://localhost/php/wordle-game/api/get_random_word.php")
-    .then(res => res.json())
-    .then(res => setMessage(res.response));
+    startGame().then(res => res.status === 200 ? setIsGameStarted(true) : setIsGameStarted(false));
+
   }, []);
+
 
   return (
     <>
-      <h1>Wordlegame</h1>
-      <p>{message}</p>
+      <div id='App'>
+        <h1>Wordle Game</h1>
+        {isGameStarted && <Worlde />}
+      </div>
+      
     </>
   )
 }

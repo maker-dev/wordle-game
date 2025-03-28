@@ -8,7 +8,15 @@ header("Content-Type: application/json");
 // Allow Cross-Origin Resource Sharing (CORS) if needed
 header("Access-Control-Allow-Origin: *");
 
-//Check http Method
+
+// Allow methods for the CORS preflight response (OPTIONS)
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+
+// Allow specific headers
+header("Access-Control-Allow-Headers: Content-Type");
+
+
+// //Check http Method
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     http_response_code(405); // Method Not Allowed
     echo json_encode([
@@ -16,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     ]);
     return;
 }
+
 
 // Read the raw POST data (JSON)
 $inputData = json_decode(file_get_contents('php://input'), true);
@@ -25,7 +34,7 @@ $guess_word = isset($inputData['guess_word']) ? $inputData['guess_word'] : '';
 if (strlen($guess_word) !== 5) {
     http_response_code(400); // Invalid input
     echo json_encode([
-        "message" => "Not enough letters"
+        "message" => "Word must be 5 letters."
     ]);
     return;
 }
@@ -69,14 +78,6 @@ if (!$random_word || !$attempts_left) {
     return;
 }
 
-// update attempts_left
-if ($attempts_left === 0) {
-    http_response_code(400); // out of attempts
-    echo json_encode([
-        "message" => "No attempts left"
-    ]);
-    return;
-}
 $attempts_left -= 1;
 $_SESSION['attempts_left'] = $attempts_left;
 
