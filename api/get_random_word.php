@@ -6,7 +6,16 @@ session_start();
 header("Content-Type: application/json");
 
 // Allow Cross-Origin Resource Sharing (CORS) if needed
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: http://localhost:5173");
+
+// Allow credentials (cookies, authorization headers, etc.)
+header("Access-Control-Allow-Credentials: true");
+
+// Allow specific HTTP methods
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE"); 
+
+// Allow specific headers, including authorization headers
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 
 $filePath = __DIR__ . "/../wordle_words.csv";
 

@@ -6,14 +6,16 @@ session_start();
 header("Content-Type: application/json");
 
 // Allow Cross-Origin Resource Sharing (CORS) if needed
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: http://localhost:5173");
 
+// Allow credentials (cookies, authorization headers, etc.)
+header("Access-Control-Allow-Credentials: true");
 
-// Allow methods for the CORS preflight response (OPTIONS)
-header("Access-Control-Allow-Methods: POST, OPTIONS");
+// Allow specific HTTP methods
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE"); 
 
-// Allow specific headers
-header("Access-Control-Allow-Headers: Content-Type");
+// Allow specific headers, including authorization headers
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 
 
 // //Check http Method

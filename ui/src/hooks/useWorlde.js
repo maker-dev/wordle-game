@@ -6,7 +6,10 @@ function useWorlde() {
 
     const startGame = async () => {
         try {
-            const response = await fetch("http://localhost/php/wordle-game/api/get_random_word.php");
+            const response = await fetch("http://localhost/php/wordle-game/api/get_random_word.php", {
+                method: "GET",
+                credentials: "include"
+            });
             const data = await response.json();
             return {status: 200, message: data.response}
         } catch (error) {
@@ -19,17 +22,13 @@ function useWorlde() {
         try {
             const response = await fetch("http://localhost/php/wordle-game/api/submit_guess.php", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json", // Tell the server it's JSON
-                },
+                credentials: "include",
                 body: JSON.stringify({guess_word})
             });
             const data = await response.json();
             console.log(data);
-            return {status: 200, message: data}
         } catch (error) {
             console.error("Error submitting word:", error);
-            return {status: 400, message: error.message}
         }
     }
     
@@ -40,7 +39,7 @@ function useWorlde() {
                 alert("word must be 5 chars long");
                 return;
             }
-            submitGuess();
+            submitGuess(currentGuess);
         }
 
         if (key === "Backspace") {

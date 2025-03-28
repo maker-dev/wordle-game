@@ -14,7 +14,9 @@ function Worlde() {
     }, [handleKeyup])
 
     return (
-        <div>current guess - {currentGuess}</div>
+        <>
+            <div>current guess - {currentGuess}</div>
+        </>
     )
 }
 
