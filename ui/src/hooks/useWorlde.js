@@ -3,6 +3,9 @@ import { useState } from "react";
 function useWorlde() {
     
     const [currentGuess, setCurrentGuess] = useState("");
+    const [guesses, setGuesses] = useState([]);
+    const [isCorrect, setIsCorrect] = useState(false);
+    const [attempsLeft, setAttemptsLeft] = useState(6);
 
     const startGame = async () => {
         try {
@@ -11,6 +14,7 @@ function useWorlde() {
                 credentials: "include"
             });
             const data = await response.json();
+            setAttemptsLeft(6);
             return {status: 200, message: data.response}
         } catch (error) {
             console.error("Error fetching word:", error);
@@ -26,7 +30,13 @@ function useWorlde() {
                 body: JSON.stringify({guess_word})
             });
             const data = await response.json();
-            console.log(data);
+            if ('correct' in data) {
+                setGuesses(prev => [...prev, data.feedback]);
+                setAttemptsLeft(data.attempts_left);
+                setIsCorrect(data.correct);
+            } else {
+                console.log("msg " + data.message);
+            } 
         } catch (error) {
             console.error("Error submitting word:", error);
         }
@@ -54,7 +64,7 @@ function useWorlde() {
         }
     }
 
-    return {startGame, submitGuess, handleKeyup, currentGuess}
+    return {startGame, submitGuess, handleKeyup, currentGuess, guesses, isCorrect, attempsLeft};
 }
 
 export default useWorlde;
