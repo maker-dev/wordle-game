@@ -6,6 +6,7 @@ function useWorlde() {
     const [guesses, setGuesses] = useState([...Array(6)]);
     const [isCorrect, setIsCorrect] = useState(false);
     const [attempsLeft, setAttemptsLeft] = useState(6);
+    const [usedKeys, setUsedKeys] = useState({});
 
     const startGame = async () => {
         try {
@@ -38,6 +39,28 @@ function useWorlde() {
                 })
                 setAttemptsLeft(data.attempts_left);
                 setIsCorrect(data.correct);
+                setUsedKeys((prevUsedKeys) => {
+                    let newKeys = {...prevUsedKeys};
+                    data.feedback.forEach((l) => {
+                        const currentColor = newKeys[l.letter];
+
+                        if (l.status == "green") {
+                            newKeys[l.letter] = "green";
+                            return;
+                        }
+
+                        if (l.status === "yellow" && currentColor !== "green") {
+                            newKeys[l.letter] = "yellow";
+                            return;
+                        }
+
+                        if (l.status === "gray" && currentColor !== "green" && currentColor !== "yellow") {
+                            newKeys[l.letter] = "gray";
+                            return;
+                        }
+                    })
+                    return newKeys;
+                })
                 setCurrentGuess("");
             } else {
                 console.log("msg " + data.message);
@@ -69,7 +92,7 @@ function useWorlde() {
         }
     }
 
-    return {startGame, submitGuess, handleKeyup, currentGuess, guesses, isCorrect, attempsLeft};
+    return {startGame, submitGuess, handleKeyup, currentGuess, guesses, isCorrect, attempsLeft, usedKeys};
 }
 
 export default useWorlde;
