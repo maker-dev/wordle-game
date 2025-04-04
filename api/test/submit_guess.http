@@ -2,5 +2,5 @@ POST http://localhost/php/wordle-game/api/submit_guess.php HTTP/1.1
 content-type: application/json
 
 {
-    "guess_word": "abase"
+    "guess_word": "treat"
 }

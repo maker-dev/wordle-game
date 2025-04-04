@@ -35,8 +35,8 @@ if (($handle = fopen($filePath, "r")) !== FALSE) {
     fclose($handle);
 }
 
-$random_number = rand(0, 999);
-
+$maxIndex = count($words) - 1;
+$random_number = $maxIndex > 0 ? rand(0, $maxIndex) : 0;
 $random_word = $words[$random_number];
 
 $_SESSION['random_word'] = $random_word;
@@ -44,5 +44,5 @@ $_SESSION['attempts_left'] = 6;
 $_SESSION['guesses'] = [];
 
 echo json_encode([
-    "response" => "Random word Generated Successfully."
+    "response" => "Random word Generated Successfully. "
 ]);

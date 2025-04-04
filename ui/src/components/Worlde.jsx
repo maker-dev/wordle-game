@@ -10,10 +10,15 @@ function Worlde() {
     useEffect(() => {
         window.addEventListener("keyup", handleKeyup);
 
+        if (isCorrect) {
+            alert("congrats, you win !");
+            window.removeEventListener("keyup", handleKeyup);
+        }
+
         return () => {
             window.removeEventListener("keyup", handleKeyup);
         }
-    }, [handleKeyup])
+    }, [handleKeyup, isCorrect, attempsLeft])
 
     useEffect(() => {
         console.log(guesses);
