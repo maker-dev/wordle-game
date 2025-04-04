@@ -3,7 +3,7 @@ import { useState } from "react";
 function useWorlde() {
     
     const [currentGuess, setCurrentGuess] = useState("");
-    const [guesses, setGuesses] = useState([]);
+    const [guesses, setGuesses] = useState([...Array(6)]);
     const [isCorrect, setIsCorrect] = useState(false);
     const [attempsLeft, setAttemptsLeft] = useState(6);
 
@@ -31,9 +31,14 @@ function useWorlde() {
             });
             const data = await response.json();
             if ('correct' in data) {
-                setGuesses(prev => [...prev, data.feedback]);
+                setGuesses(prev => {
+                    let newGuess = [...prev];
+                    newGuess[Math.abs(data.attempts_left - 5)] = data.feedback;
+                    return newGuess;  
+                })
                 setAttemptsLeft(data.attempts_left);
                 setIsCorrect(data.correct);
+                setCurrentGuess("");
             } else {
                 console.log("msg " + data.message);
             } 
