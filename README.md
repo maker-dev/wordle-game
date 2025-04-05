@@ -23,3 +23,12 @@ A Wordle game built with a PHP backend and a React frontend. The game features w
 - PHP (v7.4 or later)
 - Node.js (v14 or later)
 - npm or yarn
+
+### 🔧 Installation & Setup
+
+#### 1. **Clone the Repository**
+
+```bash
+git clone https://github.com/maker-dev/wordle-game.git
+cd wordle-game
+```
