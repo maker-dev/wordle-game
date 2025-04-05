@@ -1,12 +1,13 @@
 import { useState } from "react";
 
-function useWorlde() {
+function useWordle() {
     
     const [currentGuess, setCurrentGuess] = useState("");
     const [guesses, setGuesses] = useState([...Array(6)]);
     const [isCorrect, setIsCorrect] = useState(false);
     const [attempsLeft, setAttemptsLeft] = useState(6);
     const [usedKeys, setUsedKeys] = useState({});
+    const [alertMessage, setAlertMessage] = useState("");
 
     const startGame = async () => {
         try {
@@ -63,18 +64,18 @@ function useWorlde() {
                 })
                 setCurrentGuess("");
             } else {
-                console.log("msg " + data.message);
+                setAlertMessage(data.message);
             } 
         } catch (error) {
             console.error("Error submitting word:", error);
         }
     }
-    
+
     const handleKeyup = ({key}) => {
 
         if (key === "Enter") {
             if (currentGuess.length !== 5) {
-                alert("word must be 5 chars long");
+                setAlertMessage("Too Short")
                 return;
             }
             submitGuess(currentGuess);
@@ -92,7 +93,7 @@ function useWorlde() {
         }
     }
 
-    return {startGame, submitGuess, handleKeyup, currentGuess, guesses, isCorrect, attempsLeft, usedKeys};
+    return {startGame, submitGuess, handleKeyup, setAlertMessage, currentGuess, guesses, isCorrect, attempsLeft, usedKeys, alertMessage};
 }
 
-export default useWorlde;
+export default useWordle;

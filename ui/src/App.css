@@ -11,6 +11,23 @@ h1 {
   margin: 0 0 30px 0;
   color: #333;
 }
+
+/* header */
+.game-header {
+  background-color: #fff;
+  padding: 6px 12px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.game-header h1 {
+  font-family: 'Arial', sans-serif;
+  font-size: 1.2rem;
+  color: #333;
+  letter-spacing: 1px;
+  margin: 0;
+  font-weight: bold;
+}
+
 /* rows */
 .row {
   text-align: center;
@@ -90,6 +107,94 @@ h1 {
   transition: all 0.3s ease-in;
 }
 
+/* Alert */
+.alert {
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  transform:  translateX(-50%);
+  background-color: #fff; /* White background */
+  color: #000; /* Black text */
+  padding: 25px 40px;
+  text-transform: capitalize;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Ensure it appears on top of other elements */
+  text-align: center;
+  max-width: 300px; /* Limit width of the alert */
+}
+.alert p {
+  margin: 0;
+}
+
+/* Modal */
+.modal {
+  background: rgba(255, 255, 255, 0.7);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999; /* Ensure it appears above everything */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.modal div {
+  max-width: 480px;
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  margin: auto;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.modal h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.modal .message {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.modal .subtext {
+  font-size: 1rem;
+  color: #777;
+}
+
+.play-again {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  background-color: #28a745; /* Green background */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.play-again:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+/* Conditional colors */
+.modal div:has(h1:contains('Congratulations')) h1 {
+  color: #28a745; /* green for win */
+}
+.modal div:has(h1:contains('Game Over')) h1 {
+  color: #dc3545; /* red for loss */
+}
+
 /* keyframe animations */
 @keyframes flip {
   0% {
@@ -126,5 +231,16 @@ h1 {
   100% {
     transform: scale(1);
     border-color: #333;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
 }

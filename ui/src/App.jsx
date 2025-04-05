@@ -1,28 +1,27 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import useWorlde from './hooks/useWorlde';
-import Worlde from './components/Worlde';
+import useWordle from './hooks/useWordle';
+import Wordle from './components/Wordle';
 
 function App() {
 
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const {startGame} = useWorlde();
+  const {startGame} = useWordle();
 
 
   useEffect(() => {
     startGame().then(res => res.status === 200 ? setIsGameStarted(true) : setIsGameStarted(false));
 
-  }, []);
+  }, [startGame]);
 
 
   return (
-    <>
-      <div id='App'>
+    <div id='App'>
+      <header className="game-header">
         <h1>Wordle Game</h1>
-        {isGameStarted && <Worlde />}
-      </div>
-      
-    </>
+      </header>        
+      {isGameStarted && <Wordle />}
+    </div>
   )
 }
 

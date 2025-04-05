@@ -44,5 +44,5 @@ $_SESSION['attempts_left'] = 6;
 $_SESSION['guesses'] = [];
 
 echo json_encode([
-    "response" => "Random word Generated Successfully. "
+    "response" => "Random word Generated Successfully." 
 ]);
