@@ -11,6 +11,10 @@ h1 {
   margin: 0 0 30px 0;
   color: #333;
 }
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
 /* header */
 .game-header {

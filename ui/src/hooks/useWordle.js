@@ -71,6 +71,14 @@ function useWordle() {
         }
     }
 
+    const resetSettings = () => {
+        setCurrentGuess("");
+        setGuesses([...Array(6)]);
+        setIsCorrect(false);
+        setAttemptsLeft(6);
+        setUsedKeys({});
+    }
+
     const handleKeyup = ({key}) => {
 
         if (key === "Enter") {
@@ -93,7 +101,7 @@ function useWordle() {
         }
     }
 
-    return {startGame, submitGuess, handleKeyup, setAlertMessage, currentGuess, guesses, isCorrect, attempsLeft, usedKeys, alertMessage};
+    return {startGame, submitGuess, handleKeyup, setAlertMessage, resetSettings, currentGuess, guesses, isCorrect, attempsLeft, usedKeys, alertMessage};
 }
 
 export default useWordle;

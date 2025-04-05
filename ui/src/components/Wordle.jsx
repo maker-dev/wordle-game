@@ -7,7 +7,7 @@ import Alert from './Alert';
 
 function Wordle() {
 
-    const { handleKeyup, currentGuess, guesses, isCorrect, attempsLeft, usedKeys, alertMessage, setAlertMessage} = useWordle();
+    const { handleKeyup, setAlertMessage, resetSettings, startGame, currentGuess, guesses, isCorrect, attempsLeft, usedKeys, alertMessage} = useWordle();
     const [showModal, setShowModal] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
@@ -45,7 +45,7 @@ function Wordle() {
         <div>
             <Grid currentGuess={currentGuess} guesses={guesses} attempsLeft={attempsLeft}/>
             <Keypad usedKeys={usedKeys}/>
-            {showModal && <Modal isCorrect={isCorrect}/>}
+            {showModal && <Modal isCorrect={isCorrect} resetSettings={resetSettings} startGame={startGame} setShowModal={setShowModal}/>}
             {showAlert && <Alert message={alertMessage}/>}
         </div>
     )
