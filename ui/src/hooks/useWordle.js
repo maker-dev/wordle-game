@@ -19,7 +19,6 @@ function useWordle() {
             });
             const data = await response.json();
             setAttemptsLeft(6);
-            console.log(data.response);
             return {status: 200, message: data.response}
         } catch (error) {
             console.error("Error fetching word:", error);
@@ -74,6 +73,20 @@ function useWordle() {
         }
     }
 
+    const getSolution = async () => {
+        try {
+            const response = await fetch(`${API_URL}/get_solution_word.php`, {
+                method: "GET",
+                credentials: "include"
+            });
+            const data = await response.json();
+            return data.solution;
+        } catch (error) {
+            console.error("Error fetching word:", error);
+            return null;
+        }
+    }
+
     const resetSettings = () => {
         setCurrentGuess("");
         setGuesses([...Array(6)]);
@@ -104,7 +117,7 @@ function useWordle() {
         }
     }
 
-    return {startGame, submitGuess, handleKeyup, setAlertMessage, resetSettings, currentGuess, guesses, isCorrect, attempsLeft, usedKeys, alertMessage};
+    return {startGame, submitGuess, handleKeyup, setAlertMessage, resetSettings, getSolution, currentGuess, guesses, isCorrect, attempsLeft, usedKeys, alertMessage};
 }
 
 export default useWordle;

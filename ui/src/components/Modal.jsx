@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-function Modal({isCorrect, resetSettings, startGame, setShowModal}) {
+function Modal({isCorrect, resetSettings, startGame, setShowModal, getSolution}) {
     
     const [loading, setLoading] = useState(false);
+    const [solution, setSolution] = useState("");
 
     const handleRestart = () => {
         setLoading(true);        
@@ -12,10 +13,15 @@ function Modal({isCorrect, resetSettings, startGame, setShowModal}) {
                 if (res && res.status === 200) {
                     setLoading(false);
                     setShowModal(false);
+                    setSolution("");
                 }
             })
         }, 1000);      
     };
+
+    useEffect(() => {
+        getSolution().then(res => setSolution(res))
+    }, [getSolution])
 
     return (
         <div className='modal'>
@@ -40,6 +46,7 @@ function Modal({isCorrect, resetSettings, startGame, setShowModal}) {
             <h1>Game Over!</h1>
             <p className="message">You've used all your tries.</p>
             <p className="subtext">Don't worry, you'll get it next time!</p>
+            <p className="solution">The solution word was: <strong>{solution}</strong></p>
             <button className="play-again" onClick={handleRestart} disabled={loading}>
                 {
                     loading && 
