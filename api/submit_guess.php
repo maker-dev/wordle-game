@@ -1,4 +1,11 @@
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
+
+//ENV
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$Front_URL = $_ENV["FRONT_URL"];
 
 session_start();
 
@@ -6,7 +13,7 @@ session_start();
 header("Content-Type: application/json");
 
 // Allow Cross-Origin Resource Sharing (CORS) if needed
-header("Access-Control-Allow-Origin: http://localhost:5173");
+header("Access-Control-Allow-Origin: " . $Front_URL);
 
 // Allow credentials (cookies, authorization headers, etc.)
 header("Access-Control-Allow-Credentials: true");
@@ -42,7 +49,7 @@ if (strlen($guess_word) !== 5) {
 }
 
 //Check if the word is valid
-$filePath = __DIR__ . "/../five_letter_words_full.csv";
+$filePath = __DIR__ . "/assets/five_letter_words_full.csv";
 
 $words = [];
 
