@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function useWordle() {
     
     const [currentGuess, setCurrentGuess] = useState("");
@@ -11,12 +13,13 @@ function useWordle() {
 
     const startGame = async () => {
         try {
-            const response = await fetch("http://localhost/php/wordle-game/api/get_random_word.php", {
+            const response = await fetch(`${API_URL}/get_random_word.php`, {
                 method: "GET",
                 credentials: "include"
             });
             const data = await response.json();
             setAttemptsLeft(6);
+            console.log(data.response);
             return {status: 200, message: data.response}
         } catch (error) {
             console.error("Error fetching word:", error);
@@ -26,7 +29,7 @@ function useWordle() {
 
     const submitGuess = async (guess_word) => {
         try {
-            const response = await fetch("http://localhost/php/wordle-game/api/submit_guess.php", {
+            const response = await fetch(`${API_URL}/submit_guess.php`, {
                 method: "POST",
                 credentials: "include",
                 body: JSON.stringify({guess_word})
