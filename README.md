@@ -45,7 +45,7 @@ cp .env.example .env //
 
 ### **3. Set up the Frontend (React.js)**  
 ```bash
-cd client
+cd ui
 
 npm install
 
