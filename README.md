@@ -32,3 +32,25 @@ A Wordle game built with a PHP backend and a React frontend. The game features w
 git clone https://github.com/maker-dev/wordle-game.git
 cd wordle-game
 ```
+
+### **2. Set up the Backend (php)**  
+```bash
+cd api
+
+composer install
+
+# Create a .env file and configure the environment variables
+cp .env.example .env //
+```
+
+### **3. Set up the Frontend (React.js)**  
+```bash
+cd client
+
+npm install
+
+# Create a .env file and configure the environment variables
+cp .env.example .env //
+
+npm run dev
+```
