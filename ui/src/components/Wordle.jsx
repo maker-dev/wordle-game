@@ -11,9 +11,8 @@ function Wordle() {
     const [showModal, setShowModal] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
-    useEffect(() => {
-        window.addEventListener("keyup", handleKeyup);
 
+    useEffect(() => {
         if (alertMessage) {
             setShowAlert(true);
             window.setTimeout(() => {
@@ -21,15 +20,12 @@ function Wordle() {
                 setAlertMessage("");
             }, 800);
         }
+    }, [alertMessage, setAlertMessage])
 
-        if (isCorrect) {
-            window.setTimeout(() => {
-                setShowModal(true);
-            }, 1600)
-            window.removeEventListener("keyup", handleKeyup);
-        }
+    useEffect(() => {
+        window.addEventListener("keyup", handleKeyup);
 
-        if (attempsLeft <= 0) {
+        if (isCorrect || attempsLeft <= 0) {
             window.setTimeout(() => {
                 setShowModal(true);
             }, 1600)

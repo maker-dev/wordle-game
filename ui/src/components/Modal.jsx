@@ -25,7 +25,7 @@ function Modal({isCorrect, resetSettings, startGame, setShowModal, getSolution, 
     }, [getSolution])
 
 
-    if (!turn) return;
+    if (!turn && !isCorrect) return;
 
     return (
         <div className='modal'>
