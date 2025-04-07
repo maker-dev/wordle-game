@@ -5,22 +5,20 @@ import Keypad from './Keypad';
 import Modal from './Modal';
 import Alert from './Alert';
 
-function Wordle() {
+function Wordle({isGameStarted}) {
 
-    const { handleKeyup, setAlertMessage, resetSettings, startGame, getSolution, currentGuess, guesses, isCorrect, attempsLeft, usedKeys, alertMessage} = useWordle();
+    const { handleKeyup, setAlertMessage, resetSettings, startGame, getSolution, setShowAlert, showAlert, currentGuess, guesses, isCorrect, attempsLeft, usedKeys, alertMessage} = useWordle();
     const [showModal, setShowModal] = useState(false);
-    const [showAlert, setShowAlert] = useState(false);
-
 
     useEffect(() => {
-        if (alertMessage) {
+        if (!isGameStarted) {
+            setAlertMessage("Loading...")
             setShowAlert(true);
-            window.setTimeout(() => {
-                setShowAlert(false);
-                setAlertMessage("");
-            }, 800);
+        } else {
+            setAlertMessage("");
+            setShowAlert(false);
         }
-    }, [alertMessage, setAlertMessage])
+    }, [isGameStarted, setAlertMessage, setShowAlert])
 
     useEffect(() => {
         window.addEventListener("keyup", handleKeyup);

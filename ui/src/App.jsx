@@ -11,7 +11,6 @@ function App() {
 
   useEffect(() => {
     startGame().then(res => res.status === 200 ? setIsGameStarted(true) : setIsGameStarted(false));
-
   }, [startGame]);
 
 
@@ -20,7 +19,7 @@ function App() {
       <header className="game-header">
         <h1>Wordle Game</h1>
       </header>        
-      {isGameStarted && <Wordle />}
+      <Wordle isGameStarted={isGameStarted}/>
     </div>
   )
 }

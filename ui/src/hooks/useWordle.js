@@ -10,6 +10,7 @@ function useWordle() {
     const [attempsLeft, setAttemptsLeft] = useState(6);
     const [usedKeys, setUsedKeys] = useState({});
     const [alertMessage, setAlertMessage] = useState("");
+    const [showAlert, setShowAlert] = useState(false);
 
     const startGame = async () => {
         try {
@@ -67,6 +68,11 @@ function useWordle() {
                 setCurrentGuess("");
             } else {
                 setAlertMessage(data.message);
+                setShowAlert(true);
+                window.setTimeout(() => {
+                    setShowAlert(false);
+                    setAlertMessage("");
+                }, 800);
             } 
         } catch (error) {
             console.error("Error submitting word:", error);
@@ -97,9 +103,16 @@ function useWordle() {
 
     const handleKeyup = ({key}) => {
 
+        if (alertMessage === "Loading...") return;
+
         if (key === "Enter") {
             if (currentGuess.length !== 5) {
                 setAlertMessage("Too Short")
+                setShowAlert(true);
+                window.setTimeout(() => {
+                    setShowAlert(false);
+                    setAlertMessage("");
+                }, 800);
                 return;
             }
             submitGuess(currentGuess);
@@ -117,7 +130,7 @@ function useWordle() {
         }
     }
 
-    return {startGame, submitGuess, handleKeyup, setAlertMessage, resetSettings, getSolution, currentGuess, guesses, isCorrect, attempsLeft, usedKeys, alertMessage};
+    return {startGame, submitGuess, handleKeyup, setAlertMessage, resetSettings, getSolution, setShowAlert, showAlert, currentGuess, guesses, isCorrect, attempsLeft, usedKeys, alertMessage};
 }
 
 export default useWordle;
